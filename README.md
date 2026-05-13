@@ -85,14 +85,28 @@ src/
 
 This project uses `base: './'` in `vite.config.ts`, so the built app can be hosted from a GitHub Pages project path without hardcoded asset URLs.
 
+### Recommended deployment
+
+This repo includes `.github/workflows/deploy.yml`. Push to `main`, then in GitHub:
+
+1. Open the repository settings.
+2. Go to **Pages**.
+3. Set **Source** to **GitHub Actions**.
+4. Re-run the **Deploy to GitHub Pages** workflow if it does not start automatically.
+
+Do not use “Deploy from branch / root” for this Vite app. That serves the source `index.html`, which points to `/src/main.tsx` and will produce a blank page on GitHub Pages.
+
 ### Manual deployment
 
-1. Run `npm run build`.
-2. Deploy the generated `dist/` folder to GitHub Pages.
+If you deploy manually, run:
 
-### GitHub Actions example
+```bash
+npm run build
+```
 
-Create `.github/workflows/deploy.yml`:
+Then deploy the generated `dist/` folder, not the repository root.
+
+### GitHub Actions workflow
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -136,8 +150,6 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
 ```
-
-Then enable GitHub Pages in the repository settings and choose GitHub Actions as the source.
 
 ## Extension Points
 
